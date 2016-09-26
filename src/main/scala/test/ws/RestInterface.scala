@@ -67,7 +67,7 @@ trait RestApi extends HttpService with ActorLogging { actor: Actor =>
   def getHostPrefix:String
   val usage = Array(
    Array(s"${getHostPrefix}/jobCoinMixer/api/map/{ORIGINAL_ADDRESS}", "GET", "returns mapped addresses") ,
-   Array(s"${getHostPrefix}/jobCoinMixer/api/map/", "GET", "returns mapped addresses") ,
+   Array(s"${getHostPrefix}/jobCoinMixer/api/map", "GET", "returns mapped addresses") ,
    Array(s"${getHostPrefix}/jobCoinMixer/api/balance/{ADDRESS}", "GET", "returns balance"),
    Array(s"${getHostPrefix}/jobCoinMixer/api/map/{ORIGINAL_ADDRESS}", "PUT", "returns newly created mapped addresses")
   )
