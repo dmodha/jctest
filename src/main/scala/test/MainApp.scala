@@ -46,5 +46,5 @@ object MainApp extends App{
           s"$host:$port, ${cmd.failureMessage}")
         system.terminate()
     }
-  jcStore.initializeMappedAdded("abcd","39df172d-c49f-4309-b7ea-e019eb5916c4")
+//  jcStore.initializeMappedAdded("abcd","39df172d-c49f-4309-b7ea-e019eb5916c4")
 }
