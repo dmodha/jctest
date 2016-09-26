@@ -62,8 +62,8 @@ class Poller(jCStore: JCStore, houseAddress: String) extends Actor with LazyLogg
         pollBalanceAndTransaction(tuple)
         val balance = jCStore.balanceForAnAddress(tuple._2).balance
         if (balance > 0) {
-          val random = Math.min(0.25,((10*Math.random()).toInt/10.0))
-          val amountToTransfer = if( balance < 0.5) balance else (balance * random)
+          val random = Math.max(0.33,((10*Math.random()).toInt/10.0))
+          val amountToTransfer = if( balance * random < 0.5) balance else (balance * random)
           logger.info(s"transferring ${amountToTransfer} from house to ${tuple._1}")
           val t = transferPipeline(Post(s"http://jobcoin.projecticeland.net/ultrasubtle/api/transactions", Transfer(houseAddress, tuple._1, amountToTransfer.toString)))
           t onFailure {
@@ -75,7 +75,7 @@ class Poller(jCStore: JCStore, houseAddress: String) extends Actor with LazyLogg
               jCStore.withdraw(Withdraw(tuple._2, Some(amountToTransfer)))
           }
         } else {
-          logger.info("{} has zero balance", tuple._2)
+          logger.debug("{} has zero balance", tuple._2)
         }
       }
       )
