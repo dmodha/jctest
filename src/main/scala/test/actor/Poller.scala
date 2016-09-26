@@ -23,13 +23,11 @@ class Poller(jCStore: JCStore, houseAddress: String) extends Actor with LazyLogg
 
   implicit val ec: ExecutionContext = context.system.dispatchers.lookup("akka.default-dispatcher")
   val getBalancePipeline: HttpRequest => Future[BalanceAndTransactions] = (
-    //    addHeader("accept","application/json") ~>
     sendReceive
       ~> unmarshal[BalanceAndTransactions]
     )
 
   val transferPipeline: HttpRequest => Future[JobCoinResponse] = (
-    //    addHeader("Content-Type","application/json") ~>
     sendReceive
       ~> unmarshal[JobCoinResponse]
     )
@@ -84,6 +82,6 @@ class Poller(jCStore: JCStore, houseAddress: String) extends Actor with LazyLogg
 
   override def preStart(): Unit = {
     super.preStart()
-    this.context.system.scheduler.schedule(0 milliseconds, 60 seconds, self, "Tick")
+    this.context.system.scheduler.schedule(0 milliseconds, 30 seconds, self, "Tick")
   }
 }
